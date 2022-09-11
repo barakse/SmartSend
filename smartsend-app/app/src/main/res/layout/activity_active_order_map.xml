@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="activities.ActiveOrderMapActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.ActiveOrderMapActivity">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <View
+        android:id="@+id/cardLimit"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_marginTop="35dp"
+        />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/cardLimit">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:behavior_hideable="false"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+            <ImageButton
+                android:id="@+id/btnArrowBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:background="@android:color/transparent"
+                android:onClick="closeActivity"
+                android:src="@drawable/ic_arrow_back_black" />
+
+            <Button
+                android:id="@+id/btnCompleteTask"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp"
+                android:background="#0c81f2"
+                android:fontFamily="@font/poppins"
+                android:onClick="updateOrderStatus"
+                android:text="COMPLETE TASK"
+                android:textColor="#fff" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/btnArrowBack"
+                android:background="@drawable/bg_card"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/statusInfoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Status Info"
+                    android:textColor="#0c81f2" />
+
+                <RelativeLayout
+                    android:id="@+id/contactInfoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/statusInfoLabel"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/lightBlue"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:fontFamily="@font/poppins"
+                        android:text="Contact Info"
+                        android:textColor="#000"
+                        android:textSize="11dp" />
+
+                    <ImageButton
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins"
+                        android:src="@drawable/ic_arrow_down_black"
+                        android:text="Status Info"
+                        android:textColor="#000"
+                        android:textSize="11dp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/contactInfoValues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contactInfoTitle"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingRight="5dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="10dp"
+                        android:onClick="callContact"
+                        android:src="@drawable/ic_phone" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="15dp"
+                        android:onClick="naviagteToAddress"
+                        android:src="@drawable/ic_navigate" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contactInfoTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contactInfoTitle"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/contactInfoValues"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvContactName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/ic_contact_black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Meidan"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:drawableLeft="@drawable/ic_place"
+                        android:fontFamily="@font/poppins"
+                        android:text="Hertsel 7 Yehud"
+                        android:textSize="11dp" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/signatureTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contactInfoValues"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/lightBlue"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:fontFamily="@font/poppins"
+                        android:text="Signature(s)"
+                        android:textColor="#000"
+                        android:textSize="11dp" />
+
+                    <ImageButton
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins"
+                        android:onClick="openSignaturePad"
+                        android:src="@drawable/ic_plus_black"
+                        android:text="Status Info"
+                        android:textColor="#000"
+                        android:textSize="10dp" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/signatures"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_below="@id/signatureTitle"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <RelativeLayout
+                    android:id="@+id/paymentsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/signatures"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/lightBlue"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:fontFamily="@font/poppins"
+                        android:text="Payments"
+                        android:textColor="#000"
+                        android:textSize="11dp" />
+
+                    <ImageButton
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins"
+                        android:src="@drawable/ic_arrow_down_black"
+                        android:text="Status Info"
+                        android:textColor="#000"
+                        android:textSize="10dp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/paymentsTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/paymentsTitle"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Your commission"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Payment Method"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Payment Status"
+                        android:textSize="11dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/paymentsTitle"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="$255.17"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Cash"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="PENDING"
+                        android:textColor="@color/colorPrimaryGreen"
+                        android:textSize="11dp" />
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/signaturePad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"></RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

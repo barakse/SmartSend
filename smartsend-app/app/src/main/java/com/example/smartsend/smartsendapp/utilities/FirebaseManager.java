@@ -1,0 +1,98 @@
+package com.example.smartsend.smartsendapp.utilities;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.smartsend.smartsendapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
+
+import static com.example.smartsend.smartsendapp.utilities.AppController.TAG;
+
+/**
+ * Created by pict-xx on 10/2/2016.
+ */
+
+public class FirebaseManager {
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseStorage firebaseStorage;
+    private static FirebaseManager managerInstance;
+    private static final Object managerContextLock = new Object();
+
+    private FirebaseManager() {
+        firebaseStorage = FirebaseStorage.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+    }
+
+    public static FirebaseManager getInstance() {
+        if (managerInstance == null) {
+            synchronized (managerContextLock) {
+                if (managerInstance == null) {
+                    managerInstance = new FirebaseManager();
+                }
+            }
+        }
+
+        return managerInstance;
+    }
+
+    public File getRiderProfilePicture(String riderID) throws IOException {
+        File localFile = File.createTempFile("riderImage", "jpg");
+        StorageReference storageReference = firebaseStorage.getReference().child(riderID + ".jpg");
+
+        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+            Log.d(TAG, "User image uploaded");
+        });
+
+        return localFile;
+    }
+
+    public void signOut(Context ctx) {
+        UserLocalStore localStore = UserLocalStore.getInstance(ctx);
+
+        localStore.clearClientData();
+        mAuth.signOut();
+    }
+
+    public FirebaseAuth getAuth() {
+        return mAuth;
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return currentUser;
+    }
+
+    public FirebaseDatabase getFirebaseDatabase() {
+        return firebaseDatabase;
+    }
+
+    public FirebaseStorage getFirebaseStorage() {
+        return firebaseStorage;
+    }
+
+    public void setCurrentUser(FirebaseUser currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public void resetPassword(Context ctx, String userEmail) {
+        mAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(ctx, "Password reset link sent to your email.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ctx, "Error: " + (task.getException().getMessage() != null ? task.getException().getMessage() :
+                        "Invalid email entered."), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
